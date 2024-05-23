@@ -1,3 +1,8 @@
+<a name="3.2.9"></a>
+## [3.2.9](https://github.com/ionic-team/ionic-app-scripts/compare/v3.2.8...v3.2.9) (2024-05-23)
+* Working in add support for Node 16
+
+
 <a name="3.2.8"></a>
 ## [3.2.8](https://github.com/ionic-team/ionic-app-scripts/compare/v3.2.7...v3.2.8) (2024-05-23)
 
