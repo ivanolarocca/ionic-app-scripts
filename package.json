@@ -1,6 +1,6 @@
 {
   "name": "@ionic/app-scripts",
-  "version": "3.2.4",
+  "version": "3.2.6",
   "description": "Scripts for Ionic Projects",
   "homepage": "https://ionicframework.com/",
   "author": "Ionic Team <hi@ionic.io> (https://ionic.io)",
@@ -16,13 +16,13 @@
   "bin": {
     "ionic-app-scripts": "./bin/ionic-app-scripts.js"
   },
-  "type": "module",
   "scripts": {
     "build": "npm run clean && tsc && npm run sass",
     "build-and-test": "jest",
     "changelog": "./node_modules/.bin/conventional-changelog -p angular -i CHANGELOG.md -s",
     "clean": "rimraf ./dist",
     "github-release": "node ./scripts/create-github-release.js",
+    "github-release-original": "node ./scripts/create-github-release-original.js",
     "lint": "tslint -c ./tslint.json --project ./tsconfig.json --type-check -t stylish",
     "nightly": "npm run build && node ./scripts/publish-nightly.js",
     "sass": "sass ./src/dev-client/sass/ion-dev.scss ./bin/ion-dev.css --style compressed",
