@@ -16,6 +16,7 @@
   "bin": {
     "ionic-app-scripts": "./bin/ionic-app-scripts.js"
   },
+  "type": "module",
   "scripts": {
     "build": "npm run clean && tsc && npm run sass",
     "build-and-test": "jest",
@@ -24,14 +25,15 @@
     "github-release": "node ./scripts/create-github-release.js",
     "lint": "tslint -c ./tslint.json --project ./tsconfig.json --type-check -t stylish",
     "nightly": "npm run build && node ./scripts/publish-nightly.js",
-    "sass": "node-sass ./src/dev-client/sass/ion-dev.scss --output ./bin/ --output-style compressed",
-    "sass-watch": "npm run sass && node-sass ./src/dev-client/sass/ion-dev.scss --watch --output ./bin/ --output-style compressed",
+    "sass": "sass ./src/dev-client/sass/ion-dev.scss ./bin/ion-dev.css --style compressed",
+    "sass-watch": "npm run sass && sass ./src/dev-client/sass/ion-dev.scss ./bin/ion-dev.css --watch --style compressed",
     "test": "jest",
     "watch": "npm run clean && tsc --watch & npm run sass-watch"
   },
   "main": "dist/index.js",
   "dependencies": {
     "@angular-devkit/build-optimizer": "0.0.35",
+    "@octokit/core": "^6.1.2",
     "autoprefixer": "^7.2.6",
     "chalk": "^2.4.0",
     "chokidar": "^2.0.4",
@@ -80,6 +82,7 @@
     "@types/node": "^8.10.9",
     "@types/node-sass": "^3.10.32",
     "@types/rewire": "^2.5.27",
+    "@types/sass": "^1.45.0",
     "@types/webpack": "^3.8.11",
     "@types/ws": "^3.2.0",
     "conventional-changelog-cli": "^1.3.22",
