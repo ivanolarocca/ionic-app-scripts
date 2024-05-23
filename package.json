@@ -28,7 +28,8 @@
     "sass": "sass ./src/dev-client/sass/ion-dev.scss ./bin/ion-dev.css --style compressed",
     "sass-watch": "npm run sass && sass ./src/dev-client/sass/ion-dev.scss ./bin/ion-dev.css --watch --style compressed",
     "test": "jest",
-    "watch": "npm run clean && tsc --watch & npm run sass-watch"
+    "watch": "npm run clean && tsc --watch & npm run sass-watch",
+    "publish": "npm publish --access public"
   },
   "main": "dist/index.js",
   "dependencies": {
@@ -91,6 +92,7 @@
     "ionic-cz-conventional-changelog": "^1.0.0",
     "jest": "^21.2.1",
     "mock-fs": "^4.4.2",
+    "node-fetch": "^2.7.0",
     "rewire": "^2.5.2",
     "rimraf": "^2.6.1",
     "rxjs": "^5.5.10",
