@@ -5,7 +5,6 @@ var logger_1 = require("./logger");
 var fs_1 = require("fs");
 var helpers_1 = require("../util/helpers");
 function runSassDiagnostics(context, sassError) {
-    return [];
     if (!sassError) {
         return [];
     }
@@ -14,7 +13,7 @@ function runSassDiagnostics(context, sassError) {
         type: 'sass',
         language: 'scss',
         header: 'sass error',
-        code: sassError.name,
+        code: sassError.status && sassError.status.toString(),
         relFileName: null,
         absFileName: null,
         messageText: sassError.message,
@@ -24,7 +23,7 @@ function runSassDiagnostics(context, sassError) {
         d.absFileName = sassError.file;
         d.relFileName = logger_1.Logger.formatFileName(context.rootDir, d.absFileName);
         d.header = logger_1.Logger.formatHeader('sass', d.absFileName, context.rootDir, sassError.line);
-        if (sassError.stack > -1) {
+        if (sassError.line > -1) {
             try {
                 var sourceText = fs_1.readFileSync(d.absFileName, 'utf8');
                 var srcLines = helpers_1.splitLineBreaks(sourceText);

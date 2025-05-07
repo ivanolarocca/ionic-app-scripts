@@ -9,7 +9,7 @@ var config_1 = require("./util/config");
 var logger_1 = require("./logger/logger");
 var logger_sass_1 = require("./logger/logger-sass");
 var logger_diagnostics_1 = require("./logger/logger-diagnostics");
-var sass_1 = require("sass");
+var node_sass_1 = require("node-sass");
 var postcss = require("postcss");
 var autoprefixer = require("autoprefixer");
 function sass(context, configFile) {
@@ -202,18 +202,21 @@ function render(context, sassConfig) {
         if (sassConfig.sourceMap) {
             sassConfig.sourceMapContents = true;
         }
-        sass_1.compileAsync(sassConfig.file).then(function (sassResult) {
-            // sass render success :)
-            renderSassSuccess(context, sassResult, sassConfig).then(function (outFile) {
-                resolve(outFile);
-            }).catch(function (err) {
-                reject(new errors_1.BuildError(err));
-            });
-        }).catch(function (sassError) {
+        node_sass_1.render(sassConfig, function (sassError, sassResult) {
             var diagnostics = logger_sass_1.runSassDiagnostics(context, sassError);
-            logger_diagnostics_1.printDiagnostics(context, logger_diagnostics_1.DiagnosticsType.Sass, diagnostics, true, true);
-            // sass render error :(
-            reject(new errors_1.BuildError('Failed to render sass to css'));
+            if (diagnostics.length) {
+                logger_diagnostics_1.printDiagnostics(context, logger_diagnostics_1.DiagnosticsType.Sass, diagnostics, true, true);
+                // sass render error :(
+                reject(new errors_1.BuildError('Failed to render sass to css'));
+            }
+            else {
+                // sass render success :)
+                renderSassSuccess(context, sassResult, sassConfig).then(function (outFile) {
+                    resolve(outFile);
+                }).catch(function (err) {
+                    reject(new errors_1.BuildError(err));
+                });
+            }
         });
     });
 }
@@ -258,10 +261,10 @@ function renderSassSuccess(context, sassResult, sassConfig) {
 function generateSourceMaps(sassResult, sassConfig) {
     // this can be async and nothing needs to wait on it
     // build Source Maps!
-    if (sassResult.sourceMap) {
+    if (sassResult.map) {
         logger_1.Logger.debug("sass, generateSourceMaps");
         // transform map into JSON
-        var sassMap = JSON.parse(sassResult.sourceMap.toString());
+        var sassMap = JSON.parse(sassResult.map.toString());
         // grab the stdout and transform it into stdin
         var sassMapFile = sassMap.file.replace(/^stdout$/, 'stdin');
         // grab the base file name that's being worked on

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var logger_1 = require("../logger/logger");
 var fs = require("fs");
 var path = require("path");
-// import * as nodeSass from 'node-sass';
+var nodeSass = require("node-sass");
 var rollup = require("rollup");
 var typescript = require("typescript");
 var uglify = require("uglify-es");
@@ -22,7 +22,7 @@ function bundleCoreComponents(context) {
             cleanCss: cleanCss,
             fs: fs,
             path: path,
-            // nodeSass: nodeSass,
+            nodeSass: nodeSass,
             rollup: rollup,
             typescript: typescript,
             uglify: uglify
