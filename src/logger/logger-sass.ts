@@ -2,11 +2,11 @@ import { BuildContext, Diagnostic, PrintLine } from '../util/interfaces';
 import { highlight } from '../highlight/highlight';
 import { Logger } from './logger';
 import { readFileSync } from 'fs';
-import { SassError } from 'node-sass';
 import { splitLineBreaks } from '../util/helpers';
 
+export function runSassDiagnostics(context: BuildContext, sassError: any) {
+  return [];
 
-export function runSassDiagnostics(context: BuildContext, sassError: SassError) {
   if (!sassError) {
     return [];
   }
@@ -16,7 +16,7 @@ export function runSassDiagnostics(context: BuildContext, sassError: SassError) 
     type: 'sass',
     language: 'scss',
     header: 'sass error',
-    code: sassError.status && sassError.status.toString(),
+    code: sassError.name,
     relFileName: null,
     absFileName: null,
     messageText: sassError.message,
@@ -28,7 +28,7 @@ export function runSassDiagnostics(context: BuildContext, sassError: SassError) 
     d.relFileName = Logger.formatFileName(context.rootDir, d.absFileName);
     d.header = Logger.formatHeader('sass', d.absFileName, context.rootDir, sassError.line);
 
-    if (sassError.line > -1) {
+    if (sassError.stack > -1) {
       try {
         const sourceText = readFileSync(d.absFileName, 'utf8');
         const srcLines = splitLineBreaks(sourceText);

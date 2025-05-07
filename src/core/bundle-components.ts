@@ -2,7 +2,7 @@ import { BuildContext, CoreCompiler } from '../util/interfaces';
 import { Logger } from '../logger/logger';
 import * as fs from 'fs';
 import * as path from 'path';
-import * as nodeSass from 'node-sass';
+// import * as nodeSass from 'node-sass';
 import * as rollup from 'rollup';
 import * as typescript from 'typescript';
 import * as uglify from 'uglify-es';
@@ -25,7 +25,7 @@ export function bundleCoreComponents(context: BuildContext) {
       cleanCss: cleanCss,
       fs: fs,
       path: path,
-      nodeSass: nodeSass,
+      // nodeSass: nodeSass,
       rollup: rollup,
       typescript: typescript,
       uglify: uglify

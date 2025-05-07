@@ -7,7 +7,7 @@ import { fillConfigDefaults, getUserConfigFile, replacePathVars } from './util/c
 import { Logger } from './logger/logger';
 import { runSassDiagnostics } from './logger/logger-sass';
 import { printDiagnostics, clearDiagnostics, DiagnosticsType } from './logger/logger-diagnostics';
-import { SassError, render as nodeSassRender, Result } from 'node-sass';
+import { compileAsync, CompileResult } from 'sass';
 import * as postcss from 'postcss';
 import * as autoprefixer from 'autoprefixer';
 
@@ -245,29 +245,25 @@ function render(context: BuildContext, sassConfig: SassConfig): Promise<string> 
       sassConfig.sourceMapContents = true;
     }
 
-    nodeSassRender(sassConfig, (sassError: SassError, sassResult: Result) => {
+    compileAsync(sassConfig.file).then((sassResult: CompileResult) => {
+      // sass render success :)
+      renderSassSuccess(context, sassResult, sassConfig).then(outFile => {
+        resolve(outFile);
+
+      }).catch(err => {
+        reject(new BuildError(err));
+      });
+    }).catch((sassError: Error) => {
       const diagnostics = runSassDiagnostics(context, sassError);
-
-      if (diagnostics.length) {
-        printDiagnostics(context, DiagnosticsType.Sass, diagnostics, true, true);
-        // sass render error :(
-        reject(new BuildError('Failed to render sass to css'));
-
-      } else {
-        // sass render success :)
-        renderSassSuccess(context, sassResult, sassConfig).then(outFile => {
-          resolve(outFile);
-
-        }).catch(err => {
-          reject(new BuildError(err));
-        });
-      }
+      printDiagnostics(context, DiagnosticsType.Sass, diagnostics, true, true);
+      // sass render error :(
+      reject(new BuildError('Failed to render sass to css'));
     });
   });
 }
 
 
-function renderSassSuccess(context: BuildContext, sassResult: Result, sassConfig: SassConfig): Promise<string> {
+function renderSassSuccess(context: BuildContext, sassResult: CompileResult, sassConfig: SassConfig): Promise<string> {
   if (sassConfig.autoprefixer) {
     // with autoprefixer
 
@@ -320,15 +316,15 @@ function renderSassSuccess(context: BuildContext, sassResult: Result, sassConfig
 }
 
 
-function generateSourceMaps(sassResult: Result, sassConfig: SassConfig): SassMap {
+function generateSourceMaps(sassResult: CompileResult, sassConfig: SassConfig): SassMap {
   // this can be async and nothing needs to wait on it
 
   // build Source Maps!
-  if (sassResult.map) {
+  if (sassResult.sourceMap) {
     Logger.debug(`sass, generateSourceMaps`);
 
     // transform map into JSON
-    const sassMap: SassMap = JSON.parse(sassResult.map.toString());
+    const sassMap: SassMap = JSON.parse(sassResult.sourceMap.toString());
 
     // grab the stdout and transform it into stdin
     const sassMapFile = sassMap.file.replace(/^stdout$/, 'stdin');
