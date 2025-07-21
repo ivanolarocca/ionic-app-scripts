@@ -1,6 +1,6 @@
 {
   "name": "app-scripts-with-sass",
-  "version": "3.2.10-dev",
+  "version": "3.2.11-dev",
   "description": "Scripts for Ionic Projects",
   "homepage": "https://ionicframework.com/",
   "author": "Ionic Team <hi@ionic.io> (https://ionic.io)",
@@ -45,7 +45,7 @@
     "fs-extra": "^4.0.2",
     "glob": "^7.1.2",
     "json-loader": "^0.5.7",
-    "node-sass": "^6.0.1",
+    "node-sass": "^9.0.0",
     "os-name": "^2.0.1",
     "postcss": "^6.0.21",
     "proxy-middleware": "^0.15.0",
