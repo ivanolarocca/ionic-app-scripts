@@ -1,6 +1,6 @@
 {
   "name": "app-scripts-with-sass",
-  "version": "3.2.11-dev",
+  "version": "3.2.12-dev",
   "description": "Scripts for Ionic Projects",
   "homepage": "https://ionicframework.com/",
   "author": "Ionic Team <hi@ionic.io> (https://ionic.io)",
@@ -17,7 +17,7 @@
     "ionic-app-scripts": "./bin/ionic-app-scripts.js"
   },
   "scripts": {
-    "build": "npm run clean && tsc && npm run sass",
+    "build-old": "npm run clean && tsc && npm run sass",
     "build-and-test": "jest",
     "changelog": "./node_modules/.bin/conventional-changelog -p angular -i CHANGELOG.md -s",
     "clean": "rimraf ./dist",
