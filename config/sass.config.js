@@ -98,6 +98,18 @@ module.exports = {
     'ionic-native',
     'rxjs',
     'zone.js'
-  ]
-
+  ],
+  /**
+   * silenceDeprecations
+   * A set of active deprecations to ignore with newest sass version
+   * (Disable all deprecation warning during ionic sass building)
+   */
+  silenceDeprecations: [
+    'legacy-js-api', 
+    'mixed-decls', 
+    'slash-div', 
+    'global-builtin', 
+    'color-functions', 
+    'import'
+  ],
 };

@@ -202,6 +202,12 @@ function render(context, sassConfig) {
         if (sassConfig.sourceMap) {
             sassConfig.sourceMapContents = true;
         }
+
+        // silenceDeprecations reminder
+        if(sassConfig.silenceDeprecations) {
+            logger_1.Logger.warn("sass silenceDeprecations active for:", sassConfig.silenceDeprecations.join(", "));
+        }
+
         sass_1.render(sassConfig, function (sassError, sassResult) {
             var diagnostics = logger_sass_1.runSassDiagnostics(context, sassError);
             if (diagnostics.length) {
