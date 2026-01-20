@@ -106,10 +106,10 @@ module.exports = {
    */
   silenceDeprecations: [
     'legacy-js-api', 
-    'mixed-decls', 
     'slash-div', 
     'global-builtin', 
     'color-functions', 
+    'if-function', 
     'import'
   ],
 };
