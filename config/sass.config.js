@@ -109,7 +109,7 @@ module.exports = {
     'slash-div', 
     'global-builtin', 
     'color-functions', 
-    'if-function', 
+    // 'if-function', 
     'import'
   ],
 };
