@@ -110,6 +110,7 @@ module.exports = {
     'global-builtin', 
     'color-functions', 
     // 'if-function', 
-    'import'
+    'import',
+    'mixed-decls'
   ],
 };
